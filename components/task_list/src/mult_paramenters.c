@@ -11,16 +11,16 @@ void mult_task(void *ptr)
 
     while (1)
     {
-        if (ptr==&led1)
+        if (ptr == &led1)
         {
             (*pin)++;
         }
-        else if (ptr==&led2)
+        else if (ptr == &led2)
         {
             (*pin) += 3;
         }
 
         vTaskDelay(delaytime / portTICK_PERIOD_MS);
     }
-    vTaskDelay(NULL);
+    vTaskDelete(NULL);
 }
