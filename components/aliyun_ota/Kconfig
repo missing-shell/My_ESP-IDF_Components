@@ -1,0 +1,15 @@
+menu "AliYun OTA Component Configuration"
+
+config AliYun_SUBSCRIBE_TOPIC_OTA_UPGRADE
+    string "AliYun Subscribe Topic for OTA Upgrade"
+    default "/ota/device/upgrade/k0leyx3kfTE/esp32"
+    help
+      Topic to subscribe for AliYun OTA upgrade notifications. Update if your AliYun OTA process uses a different path.
+
+config AliYun_PUBLISH_TOPIC_OTA_INFORM
+    string "AliYun Publish Topic for OTA Inform"
+    default "/ota/device/inform/k0leyx3kfTE/esp32"
+    help
+      Topic to inform AliYun of OTA process status. Modify if your AliYun OTA reporting requirements differ.
+
+endmenu

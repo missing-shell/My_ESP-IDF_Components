@@ -1,0 +1,48 @@
+@startuml
+title Detailed Aliyun OTA Process Flow
+
+participant App as "App Main"
+participant MQTT as "MQTT Component"
+participant OTA as "OTA Component"
+participant HTTPS as "HTTPS Component"
+participant ESP as "ESP Component"
+
+== Start of OTA Process ==
+App -> MQTT : app_aliyun_ota_init()
+note right of MQTT: Register app_mqtt_event_handler\nand wait for MQTT_EVENT_DATA
+
+== MQTT Event Trigger ==
+activate MQTT
+MQTT ->> App : MQTT_EVENT_DATA\n handling
+note right of App: Data received, initiate OTA
+deactivate MQTT
+
+App -> App : app_aliyun_ota_start()
+
+== OTA Initialization ==
+App -> OTA : aliyun_ota_init()
+note right of OTA: Prepare for OTA process
+
+OTA -> OTA : aliyun_ota_config_parse_json()
+note right of OTA: Parse JSON to get OTA URL
+
+OTA -> HTTPS : aliyun_ota_https_init()
+note right of HTTPS: Format and prepare HTTPS request
+
+HTTPS -> ESP : esp_https_ota()
+note right of ESP: Perform HTTPS request for OTA update
+
+== OTA Completion ==
+note left of ESP: Update successful
+ESP --> HTTPS : OTA Complete
+HTTPS --> OTA : Notify completion
+OTA --> App : Download completed
+
+== Post-Update Actions ==
+App -> OTA : aliyun_ota_report_inform()
+note right of OTA: Report download version info
+
+App -> ESP : esp_restart()
+note right of ESP: System restarts to apply updates
+
+@enduml

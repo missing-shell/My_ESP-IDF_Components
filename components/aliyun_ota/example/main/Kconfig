@@ -1,0 +1,11 @@
+menu "My Component Configuration"
+
+config MY_COMPONENT_SUPPORTS_LARGE_FLASH
+    bool "Support for large flash sizes (e.g., 16MB)"
+    depends on CONFIG_ESPTOOLPY_FLASHSIZE="16MB"
+
+config MY_COMPONENT_USES_DUAL_OTA
+    bool "Enable dual OTA partition support"
+    default y if CONFIG_PARTITION_TABLE_TWO_OTA
+
+endmenu

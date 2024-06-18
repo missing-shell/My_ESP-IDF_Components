@@ -1,0 +1,12 @@
+idf_component_register(SRCS 
+                           "src/aliyun_ota.c" 
+                           "src/aliyun_ota_json.c"
+                    INCLUDE_DIRS 
+                            "."
+                            "include" 
+                    REQUIRES 
+                            driver   
+                            mqtt  
+                    PRIVED_REQUIRES  
+                            aliyun_mqtt           
+)
